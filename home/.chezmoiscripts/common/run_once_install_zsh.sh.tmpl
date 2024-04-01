@@ -1,0 +1,19 @@
+#!/bin/bash
+
+{{ if eq .chezmoi.os "linux" }}
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+{{ end }}
+
+brew install zsh
+
+if ! grep -q $(which zsh) /etc/shells; then
+  echo $(which zsh) | sudo tee -a /etc/shells
+fi
+chsh -s $(which zsh)
+
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+  echo "Getting ohmyz.sh"
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc --skip-chsh
+else
+  echo ".oh-my-zsh already found, skipping."
+fi

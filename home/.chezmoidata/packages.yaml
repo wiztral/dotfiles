@@ -1,0 +1,15 @@
+packages:
+  brews:
+  - 'gcc'
+  - 'git'
+  - 'curl'
+  - 'wget'
+  - 'make'
+  - 'unzip'
+  - 'ripgrep'
+  - 'nvim'
+  - 'zsh'
+  - 'tmux'
+  - 'fnm'
+  - 'pnpm'
+  - 'fzf'

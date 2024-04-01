@@ -1,0 +1,11 @@
+{{ if ne .osId "darwin" }}
+.chezmoiscripts/darwin/**
+{{ end }}
+
+{{ if ne .osId "linux-ubuntu" }}
+.chezmoiscripts/linux/**
+{{ end }}
+
+{{ if ne .osId "wsl-ubuntu" }}
+.chezmoiscripts/linux/wsl/**
+{{ end }}

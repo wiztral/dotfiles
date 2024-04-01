@@ -1,0 +1,36 @@
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="robbyrussell"
+plugins=(git)
+source $ZSH/oh-my-zsh.sh
+
+export PATH="$HOME/bin:$PATH"
+export EDITOR=nvim
+
+{{ if eq .osId "wsl-ubuntu" -}}
+# Easy ssh on WSL
+export GIT_SSH_COMMAND=ssh.exe
+alias ssh="ssh.exe"
+{{- end }}
+
+{{ if eq .chezmoi.os "linux" -}}
+# brew
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+{{- end }}
+
+# fnm
+eval "$(fnm env --use-on-cd)"
+
+# fzf
+eval "$(fzf --zsh)"
+
+# Aliases
+alias pn=pnpm
+alias pnpx="pnpm dlx"
+
+{{ if eq .osId "wsl-ubuntu" -}}
+# keep current path when duplicating windows terminal tab
+keep_current_path() {
+  printf "\e]9;9;%s\e\\" "$(wslpath -w "$PWD")"
+}
+precmd_functions+=(keep_current_path)
+{{- end }}
