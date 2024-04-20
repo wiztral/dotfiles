@@ -15,6 +15,7 @@ return { -- LSP Configuration & Plugins
     { 'folke/neodev.nvim', opts = {} },
   },
   config = function()
+    local util = require 'lspconfig.util'
     -- Brief aside: **What is LSP?**
     --
     -- LSP is an initialism you've probably heard, but might not understand what it is.
@@ -145,8 +146,48 @@ return { -- LSP Configuration & Plugins
       --
       -- But for many setups, the LSP (`tsserver`) will work just fine
       tsserver = {},
-      eslint = {},
-      tailwindcss = {},
+      eslint = {
+        on_new_config = function(config, new_root_dir)
+          -- The "workspaceFolder" is a VSCode concept. It limits how far the
+          -- server will traverse the file system when locating the ESLint config
+          -- file (e.g., .eslintrc).
+          config.settings.workspaceFolder = {
+            uri = vim.uri_from_fname(new_root_dir),
+            name = vim.fn.fnamemodify(new_root_dir, ':t'),
+          }
+
+          -- Support flat config
+          if
+            vim.fn.filereadable(new_root_dir .. '/eslint.config.js') == 1
+            or vim.fn.filereadable(new_root_dir .. '/eslint.config.mjs') == 1
+            or vim.fn.filereadable(new_root_dir .. '/eslint.config.cjs') == 1
+            or vim.fn.filereadable(new_root_dir .. '/eslint.config.ts') == 1
+            or vim.fn.filereadable(new_root_dir .. '/eslint.config.mts') == 1
+            or vim.fn.filereadable(new_root_dir .. '/eslint.config.cts') == 1
+          then
+            config.settings.experimental.useFlatConfig = true
+          end
+
+          -- Support Yarn2 (PnP) projects
+          local pnp_cjs = util.path.join(new_root_dir, '.pnp.cjs')
+          local pnp_js = util.path.join(new_root_dir, '.pnp.js')
+          if util.path.exists(pnp_cjs) or util.path.exists(pnp_js) then
+            config.cmd = vim.list_extend({ 'yarn', 'exec' }, config.cmd)
+          end
+        end,
+      },
+      tailwindcss = {
+        settings = {
+          tailwindCSS = {
+            experimental = {
+              classRegex = {
+                { 'cva\\(([^)]*)\\)', '["\'`]([^"\'`]*).*?["\'`]' },
+                { 'cx\\(([^)]*)\\)', "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+              },
+            },
+          },
+        },
+      },
 
       lua_ls = {
         -- cmd = {...},

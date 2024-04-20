@@ -9,3 +9,14 @@
 {{ if ne .osId "wsl-ubuntu" }}
 .chezmoiscripts/linux/wsl/**
 {{ end }}
+
+{{ if ne .osId "windows" }}
+.chezmoiscripts/windows/**
+AppData/
+Documents/
+.glaze-wm/
+{{else}}
+.chezmoiscripts/linux_darwin/**
+.config/tmux/
+.zshrc
+{{ end }}

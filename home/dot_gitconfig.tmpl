@@ -1,5 +1,24 @@
+[core]
+{{- if eq .osId "windows" }}
+{{- $sshCommand := findExecutable "ssh.exe" (list "C:/Program Files/OpenSSH" "C:/Windows/System32/OpenSSH") }}
+{{- if $sshCommand }}
+{{- $sshCommand = printf "'%s'" $sshCommand }}
+  sshCommand = {{ $sshCommand  | quote }}
+{{- end }}
+{{- end }}
+
 [user]
   name = {{ .user.name | quote }}
   email = {{ .user.email | quote }}
+
 [init]
   defaultBranch = main
+
+{{- if eq .osId "windows" }}
+
+[credential]
+  helper = manager
+
+[include]
+  path = .gitconfig_local
+{{- end }}

@@ -1,0 +1,14 @@
+Set-StrictMode -Version 3.0
+$ErrorActionPreference = "Stop"
+
+{{ if not (lookPath "scoop") -}}
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+{{- end }}
+
+{{ if not (lookPath "git") -}}
+scoop install git
+{{- end }}
+
+scoop bucket add extras
+scoop bucket add nerd-fonts

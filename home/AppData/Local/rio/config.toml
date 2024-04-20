@@ -1,0 +1,11 @@
+theme = "catppuccin/catppuccin-mocha"
+use-fork = false
+working-dir = "D:/"
+
+[navigation]
+mode = "TopTab"
+use-current-path = true
+
+[shell]
+program = "pwsh"
+args = []

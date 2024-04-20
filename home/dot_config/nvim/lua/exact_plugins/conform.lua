@@ -31,7 +31,6 @@ return { -- Autoformat
         lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
       }, on_format
     end,
-
     format_after_save = function(bufnr)
       if not slow_format_filetypes[vim.bo[bufnr].filetype] then
         return
@@ -42,13 +41,13 @@ return { -- Autoformat
     end,
     formatters_by_ft = {
       lua = { 'stylua' },
-      javascript = { 'prettier' },
-      javascriptreact = { 'prettier' },
-      typescript = { 'prettier' },
-      typescriptreact = { 'prettier' },
-      json = { 'prettier' },
-      html = { 'prettier' },
-      css = { 'prettier' },
+      javascript = { 'prettierd' },
+      javascriptreact = { 'prettierd' },
+      typescript = { 'prettierd' },
+      typescriptreact = { 'prettierd' },
+      json = { 'prettierd' },
+      html = { 'prettierd' },
+      css = { 'prettierd' },
       -- python = { 'isort', 'black' },
     },
   },
