@@ -1,17 +1,30 @@
 return {
   {
     'mfussenegger/nvim-dap',
-    config = function()
-      local dap = require 'dap'
-      vim.keymap.set('n', '<Leader>dt', dap.toggle_breakpoint, {})
-      vim.keymap.set('n', '<Leader>dc', dap.continue, {})
-    end,
-  },
-  {
-    'rcarriga/nvim-dap-ui',
-    dependencies = { 'mfussenegger/nvim-dap', 'nvim-neotest/nvim-nio' },
+    dependencies = {
+      'rcarriga/nvim-dap-ui',
+      'nvim-neotest/nvim-nio',
+      'williamboman/mason.nvim',
+      'jay-babu/mason-nvim-dap.nvim',
+    },
     config = function()
       local dap, dapui = require 'dap', require 'dapui'
+
+      require('mason-nvim-dap').setup {
+        -- Makes a best effort to setup the various debuggers with
+        -- reasonable debug configurations
+        automatic_installation = true,
+
+        -- You can provide additional configuration to the handlers,
+        -- see mason-nvim-dap README for more information
+        handlers = {},
+
+        ensure_installed = {},
+      }
+
+      vim.keymap.set('n', '<Leader>dt', dap.toggle_breakpoint, {})
+      vim.keymap.set('n', '<Leader>dc', dap.continue, {})
+
       dap.listeners.before.attach.dapui_config = function()
         dapui.open()
       end
