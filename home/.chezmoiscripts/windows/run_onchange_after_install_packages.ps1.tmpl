@@ -6,3 +6,7 @@ scoop install
 {{- range .packages.scoops }} `
 {{ . -}}
 {{ end }}
+
+{{- range .packages.wingets }}
+winget install --id {{ . }} --silent --accept-source-agreements --accept-package-agreements
+{{- end }}
