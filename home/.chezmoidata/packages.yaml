@@ -29,10 +29,11 @@ packages:
   - 'main/neovim'
   - 'main/fzf'
   - 'main/starship'
-  - 'extras/glazewm'
   - 'extras/psfzf'
   - 'extras/wezterm'
   - 'extras/rio'
   - 'nerd-fonts/CascadiaMono-NF'
   - 'java/openjdk'
   - 'main/gradle-bin'
+  wingets:
+  - 'glzr-io.glazewm'
