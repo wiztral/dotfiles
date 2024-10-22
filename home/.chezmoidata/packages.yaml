@@ -34,3 +34,5 @@ packages:
   - 'extras/wezterm'
   - 'extras/rio'
   - 'nerd-fonts/CascadiaMono-NF'
+  - 'java/openjdk'
+  - 'main/gradle-bin'
