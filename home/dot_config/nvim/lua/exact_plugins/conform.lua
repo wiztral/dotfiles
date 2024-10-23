@@ -48,6 +48,8 @@ return { -- Autoformat
       json = { 'prettierd' },
       html = { 'prettierd' },
       css = { 'prettierd' },
+      kotlin = { 'ktfmt' },
+      java = { 'google-java-format' },
       -- python = { 'isort', 'black' },
     },
   },
