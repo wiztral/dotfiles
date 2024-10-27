@@ -126,6 +126,51 @@ return { -- LSP Configuration & Plugins
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
+    -- Java helpers
+    local function get_java_version(jdk_dir)
+      local release_file = jdk_dir .. '/release'
+      if vim.fn.filereadable(release_file) == 1 then
+        for line in io.lines(release_file) do
+          local major, minor = line:match 'JAVA_VERSION="(%d+)%.?(%d*)'
+          if major then
+            -- If major version is "1", return "1.minor" (e.g., "1.8")
+            if major == '1' and minor ~= '' then
+              return major .. '.' .. minor
+            end
+            -- Otherwise, return just the major version
+            return major
+          end
+        end
+      end
+      return nil
+    end
+
+    local function find_all_gradle_jdks()
+      local jdks = {}
+      local gradle_home = os.getenv 'GRADLE_USER_HOME' or vim.fn.expand '~/.gradle'
+      local gradle_jdk_path = gradle_home .. '/jdks'
+      if vim.fn.isdirectory(gradle_jdk_path) == 1 then
+        local jdk_dirs = vim.fn.glob(gradle_jdk_path .. '/*', true, true)
+        for _, jdk_dir in ipairs(jdk_dirs) do
+          local version = get_java_version(jdk_dir)
+          if version then
+            local execution_env
+            if version == '1.5' then
+              execution_env = 'J2SE-' .. version
+            else
+              execution_env = 'JavaSE-' .. version
+            end
+            local runtime = {
+              name = execution_env,
+              path = jdk_dir,
+            }
+            table.insert(jdks, runtime)
+          end
+        end
+      end
+      return jdks
+    end
+
     -- Enable the following language servers
     --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
     --
@@ -146,6 +191,15 @@ return { -- LSP Configuration & Plugins
       --    https://github.com/pmizio/typescript-tools.nvim
       --
       -- But for many setups, the LSP (`tsserver`) will work just fine
+      jdtls = {
+        settings = {
+          java = {
+            configuration = {
+              runtimes = find_all_gradle_jdks(),
+            },
+          },
+        },
+      },
       ts_ls = {},
       eslint = {
         on_new_config = function(config, new_root_dir)
@@ -224,20 +278,15 @@ return { -- LSP Configuration & Plugins
       handlers = {
         function(server_name)
           local server = servers[server_name] or {}
+
+          if server_name == 'jdtls' then
+            require('java').setup {}
+          end
           -- This handles overriding only values explicitly passed
           -- by the server configuration above. Useful when disabling
           -- certain features of an LSP (for example, turning off formatting for tsserver)
           server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
           require('lspconfig')[server_name].setup(server)
-        end,
-        jdtls = function()
-          require('java').setup {
-            -- Custom jdtls settings goes here
-          }
-
-          require('lspconfig').jdtls.setup {
-            -- Custom nvim-java configuration goes here
-          }
         end,
       },
     }
