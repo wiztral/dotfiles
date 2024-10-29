@@ -272,6 +272,14 @@ return { -- LSP Configuration & Plugins
     -- for you, so that they are available from within Neovim.
     local ensure_installed = vim.tbl_keys(servers or {})
 
+    local formatters = {
+      'stylua',
+      'prettierd',
+      'ktfmt',
+      'google-java-format',
+    }
+
+    vim.list_extend(ensure_installed, formatters)
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
     require('mason-lspconfig').setup {

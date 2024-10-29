@@ -2,9 +2,6 @@ local slow_format_filetypes = {}
 local disable_filetypes = { c = true, cpp = true }
 return { -- Autoformat
   'stevearc/conform.nvim',
-  dependencies = {
-    'WhoIsSethDaniel/mason-tool-installer.nvim',
-  },
   event = { 'BufWritePre' },
   cmd = { 'ConformInfo' },
   keys = {
@@ -18,16 +15,6 @@ return { -- Autoformat
     },
   },
   opts = function()
-    local ensure_installed = {
-      'stylua', -- Used to format Lua code
-      'prettierd',
-      'prettier',
-      'ktfmt',
-      'google-java-format',
-    }
-
-    require('mason-tool-installer').setup { ensure_installed = ensure_installed }
-
     return {
       notify_on_error = false,
       format_on_save = function(bufnr)
