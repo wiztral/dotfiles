@@ -2,7 +2,7 @@ return { -- LSP Configuration & Plugins
   'neovim/nvim-lspconfig',
   dependencies = {
     -- Automatically install LSPs and related tools to stdpath for Neovim
-    'williamboman/mason.nvim',
+    { 'williamboman/mason.nvim', config = true },
     'williamboman/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     'nvim-java/nvim-java',
@@ -11,9 +11,19 @@ return { -- LSP Configuration & Plugins
     -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
     { 'j-hui/fidget.nvim', opts = {} },
 
-    -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
+    -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
     -- used for completion, annotations and signatures of Neovim apis
-    { 'folke/neodev.nvim', opts = {} },
+    {
+      'folke/lazydev.nvim',
+      ft = 'lua',
+      opts = {
+        library = {
+          -- Load luvit types when the `vim.uv` word is found
+          { path = 'luvit-meta/library', words = { 'vim%.uv' } },
+        },
+      },
+    },
+    { 'Bilal2453/luvit-meta', lazy = true },
   },
   config = function()
     local util = require 'lspconfig.util'
@@ -191,15 +201,6 @@ return { -- LSP Configuration & Plugins
       --    https://github.com/pmizio/typescript-tools.nvim
       --
       -- But for many setups, the LSP (`tsserver`) will work just fine
-      jdtls = {
-        settings = {
-          java = {
-            configuration = {
-              runtimes = find_all_gradle_jdks(),
-            },
-          },
-        },
-      },
       ts_ls = {},
       eslint = {
         on_new_config = function(config, new_root_dir)
@@ -286,15 +287,27 @@ return { -- LSP Configuration & Plugins
       handlers = {
         function(server_name)
           local server = servers[server_name] or {}
-
-          if server_name == 'jdtls' then
-            require('java').setup {}
-          end
           -- This handles overriding only values explicitly passed
           -- by the server configuration above. Useful when disabling
           -- certain features of an LSP (for example, turning off formatting for tsserver)
           server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
           require('lspconfig')[server_name].setup(server)
+        end,
+        jdtls = function()
+          require('java').setup {
+            -- Your custom jdtls settings goes here
+          }
+
+          require('lspconfig').jdtls.setup {
+            -- Your custom nvim-java configuration goes here
+            settings = {
+              java = {
+                configuration = {
+                  runtimes = find_all_gradle_jdks(),
+                },
+              },
+            },
+          }
         end,
       },
     }
