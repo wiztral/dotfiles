@@ -15,7 +15,11 @@ return {
   },
   leader = { key = 'w', mods = 'ALT' },
   keys = {
-    { key = 'l', mods = 'LEADER', action = wezterm.action.ShowLauncher },
+    { key = ' ', mods = 'LEADER', action = wezterm.action.ShowLauncher },
+    { key = 'h', mods = 'LEADER', action = wezterm.action.ActivatePaneDirection 'Left' },
+    { key = 'l', mods = 'LEADER', action = wezterm.action.ActivatePaneDirection 'Right' },
+    { key = 'k', mods = 'LEADER', action = wezterm.action.ActivatePaneDirection 'Up' },
+    { key = 'j', mods = 'LEADER', action = wezterm.action.ActivatePaneDirection 'Down' },
     { key = 'm', mods = 'LEADER', action = wezterm.action.ToggleFullScreen },
     { key = '[', mods = 'LEADER', action = wezterm.action.ActivateCopyMode },
     { key = '-', mods = 'LEADER', action = wezterm.action { SplitVertical = { domain = 'CurrentPaneDomain' } } },
