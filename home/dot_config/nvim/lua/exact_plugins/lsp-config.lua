@@ -202,6 +202,7 @@ return { -- LSP Configuration & Plugins
       --
       -- But for many setups, the LSP (`tsserver`) will work just fine
       ts_ls = {},
+      astro = {},
       eslint = {
         on_new_config = function(config, new_root_dir)
           -- The "workspaceFolder" is a VSCode concept. It limits how far the
