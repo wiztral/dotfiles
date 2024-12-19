@@ -1,6 +1,6 @@
 $env:PATH = "$env:PATH;$HOME\bin"
 
-$env:FZF_ALT_C_COMMAND='fd --hidden'
+$env:FZF_ALT_C_COMMAND='fd --hidden --type dir'
 
 Set-PSReadLineKeyHandler -Key Tab -ScriptBlock { Invoke-FzfTabCompletion }
 Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
