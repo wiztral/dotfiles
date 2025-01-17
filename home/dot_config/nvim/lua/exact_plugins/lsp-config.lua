@@ -245,7 +245,6 @@ return { -- LSP Configuration & Plugins
           },
         },
       },
-
       lua_ls = {
         -- cmd = {...},
         -- filetypes = { ...},
@@ -258,6 +257,11 @@ return { -- LSP Configuration & Plugins
             -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
             -- diagnostics = { disable = { 'missing-fields' } },
           },
+        },
+      },
+      tinymist = {
+        settings = {
+          fontPaths = { './' },
         },
       },
     }
@@ -278,6 +282,7 @@ return { -- LSP Configuration & Plugins
       'stylua',
       'prettierd',
       'ktfmt',
+      'typstfmt',
       'google-java-format',
     }
 

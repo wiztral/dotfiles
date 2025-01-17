@@ -41,6 +41,7 @@ return { -- Autoformat
         }
       end,
       formatters_by_ft = {
+        typst = { 'typstfmt' },
         lua = { 'stylua' },
         javascript = { 'prettierd' },
         javascriptreact = { 'prettierd' },
