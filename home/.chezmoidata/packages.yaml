@@ -31,7 +31,6 @@ packages:
   - 'main/starship'
   - 'extras/psfzf'
   - 'extras/wezterm'
-  - 'extras/rio'
   - 'nerd-fonts/CascadiaMono-NF'
   - 'java/openjdk'
   - 'main/gradle-bin'
