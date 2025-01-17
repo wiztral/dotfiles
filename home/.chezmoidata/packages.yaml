@@ -34,5 +34,8 @@ packages:
   - 'nerd-fonts/CascadiaMono-NF'
   - 'java/openjdk'
   - 'main/gradle-bin'
+  - 'main/typst'
+  - 'main/just'
+  - 'extras/sumatrapdf'
   wingets:
   - 'glzr-io.glazewm'
