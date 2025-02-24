@@ -1,0 +1,28 @@
+{{- /* chezmoi:modify-template */ -}}
+{{- $start := "# Start Include Base" -}}
+{{- $end := "# End Include Base" -}}
+{{- $baseFile := ".gitconfig.base" -}}
+{{- $content := printf "%s\n[include]\n  path = %s\n%s" $start $baseFile $end -}}
+
+{{- if not (contains $start .chezmoi.stdin) -}}
+  {{ printf "%s\n\n" $content }}
+  {{- .chezmoi.stdin }}
+{{- else -}}
+  {{- $insideBlock := false -}}
+  {{- $wrote := false -}}
+
+  {{- range $line := splitList "\n" .chezmoi.stdin -}}
+    {{- if eq $line $start -}}
+      {{- $insideBlock = true -}}
+      {{- if not $wrote -}}
+        {{- $wrote = true -}}
+        {{ printf "%s" $content }}
+      {{- end -}}
+    {{- else if eq $line $end -}}
+      {{- $insideBlock = false -}}
+    {{- else if not $insideBlock -}}
+      {{ printf "\n%s" $line }}
+    {{- end -}}
+  {{- end -}}
+
+{{- end -}}
