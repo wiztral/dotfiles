@@ -2,12 +2,14 @@
 
 Wiztral's dotfiles, managed with [`chezmoi`](https://github.com/twpayne/chezmoi).
 
-### Linux/macOS
+## Linux/macOS
+
 ```shell
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply wiztral
 ```
 
-### Windows
+## Windows
+
 Run on PowerShell version 5.1 or later
 
 ```shell
