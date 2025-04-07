@@ -3,7 +3,7 @@ ZSH_THEME="robbyrussell"
 plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
-export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/bin:$HOME/quick-cmds:$PATH"
 export EDITOR=nvim
 
 {{ if eq .osId "wsl-ubuntu" -}}
