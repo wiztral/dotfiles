@@ -11,6 +11,8 @@ packages:
     - "zsh"
     - "tmux"
     - "fnm"
+    - "pyenv"
+    - "tcl-tk"
     - "pnpm"
     - "fzf"
     - "xclip"
@@ -38,5 +40,6 @@ packages:
     - "main/typst"
     - "main/just"
     - "extras/sumatrapdf"
+    - "extras/vcxsrv"
   wingets:
     - "glzr-io.glazewm"
