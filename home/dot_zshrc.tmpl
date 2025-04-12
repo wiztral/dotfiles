@@ -10,6 +10,22 @@ export EDITOR=nvim
 # Easy ssh on WSL
 export GIT_SSH_COMMAND=ssh.exe
 alias ssh="ssh.exe"
+
+# keep current path when duplicating windows terminal tab
+keep_current_path() {
+  printf "\e]9;9;%s\e\\" "$(wslpath -w "$PWD")"
+}
+precmd_functions+=(keep_current_path)
+
+# launch vcxsrv if available
+if command -v xlaunch.exe 1>/dev/null 2>&1; then
+  HOST_IP=$(ip route|awk '/^default/{print $3}')
+  export DISPLAY="$HOST_IP:0.0"
+  export LIBGL_ALWAYS_INDIRECT=1
+  if ! timeout 0.5 bash -c "</dev/tcp/$HOST_IP/6000" 2>/dev/null; then
+    xlaunch.exe -run config.xlaunch
+  fi
+fi
 {{- end }}
 
 {{ if eq .chezmoi.os "linux" -}}
@@ -31,11 +47,3 @@ alias pnpx="pnpm dlx"
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init - zsh)"
 fi
-
-{{ if eq .osId "wsl-ubuntu" -}}
-# keep current path when duplicating windows terminal tab
-keep_current_path() {
-  printf "\e]9;9;%s\e\\" "$(wslpath -w "$PWD")"
-}
-precmd_functions+=(keep_current_path)
-{{- end }}
