@@ -18,7 +18,7 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 {{- end }}
 
 # fnm
-eval "$(fnm env --use-on-cd --shell zsh)"
+eval "$(fnm env --use-on-cd --shell zsh --version-file-strategy recursive)"
 
 # fzf
 eval "$(fzf --zsh)"
