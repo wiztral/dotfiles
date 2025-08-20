@@ -31,7 +31,7 @@ packages:
     - "main/pnpm"
     - "main/neovim"
     - "main/fzf"
-    - "main/starship"
+    - "main/oh-my-posh"
     - "extras/psfzf"
     - "extras/wezterm"
     - "extras/glazewm"
