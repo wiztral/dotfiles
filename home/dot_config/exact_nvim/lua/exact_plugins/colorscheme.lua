@@ -11,12 +11,12 @@ return {
       flavour = "mocha",
       color_overrides = {
         mocha = {
-          surface2 = "#4F4F5F",
-          surface1 = "#282836",
-          surface0 = "#15151F",
-          base = "#0B0B12",
-          mantle = "#06060A",
-          crust = "#020203",
+          surface2 = "#1C1C22",
+          surface1 = "#121217",
+          surface0 = "#08080C",
+          base = "#040406",
+          mantle = "#020203",
+          crust = "#000000",
         },
       },
     },
