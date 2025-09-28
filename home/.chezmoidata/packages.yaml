@@ -41,6 +41,7 @@ packages:
     - "main/gradle-bin"
     - "main/typst"
     - "main/just"
+    - "main/python"
     - "extras/sumatrapdf"
     - "extras/vcxsrv"
   wingets: []
