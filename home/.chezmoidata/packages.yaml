@@ -42,6 +42,7 @@ packages:
     - "main/typst"
     - "main/just"
     - "main/python"
+    - "main/rustup-gnu"
     - "extras/sumatrapdf"
     - "extras/vcxsrv"
   wingets: []
