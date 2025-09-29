@@ -31,15 +31,13 @@ return {
         table.insert(opts.formatters_by_ft[ft], "prettierd")
       end
 
-      -- opts.formatters = opts.formatters or {}
-      --
-      -- local existing = opts.formatters.prettier or {}
-      --
-      -- opts.formatters.prettier = vim.tbl_deep_extend("force", existing, {
-      --   command = "prettier",
-      --   args = { "--stdin-filepath", "$FILENAME" },
-      --   stdin = true,
-      -- })
+      opts.formatters = opts.formatters or {}
+
+      local existing = opts.formatters.prettierd or {}
+
+      opts.formatters.prettierd = vim.tbl_deep_extend("force", existing, {
+        env = { PRETTIERD_LOCAL_PRETTIER_ONLY = "1" },
+      })
     end,
   },
 }
