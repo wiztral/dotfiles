@@ -8,3 +8,4 @@
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
 
 require("custom.commands.prettierd_restart")
+require("custom.commands.kulala")
