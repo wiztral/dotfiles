@@ -135,13 +135,10 @@ window_rules:
       - window_process: { equals: 'chrome' }
         window_class: { regex: 'Chrome_WidgetWin_1' }
 
-  - commands: ['move --workspace 8', 'focus --workspace 8']
-    match:
-      - window_process: { equals: 'ms-teams' }
-
   - commands: ['move --workspace 9', 'focus --workspace 9']
     match:
       - window_process: { equals: 'olk' }
+      - window_process: { equals: 'ms-teams' }
 
 binding_modes:
   # When enabled, the focused window can be resized via arrow keys or HJKL.
