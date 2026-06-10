@@ -1,15 +1,15 @@
 {
-  "$schema": "https://github.com/glzr-io/zebar/raw/v3.1.0/resources/zpack-schema.json",
-  "name": "glazewm",
-  "version": "0.0.0",
+  "$schema": "https://github.com/glzr-io/zebar/raw/v3.3.1/resources/zpack-schema.json",
+  "name": "wiztral-zb",
+  "version": "0.1.0",
   "description": "",
   "tags": [],
   "previewImages": [],
   "repositoryUrl": "",
   "widgets": [
     {
-      "name": "glazewm",
-      "htmlPath": "./dist/index.html",
+      "name": "glazewm-bar",
+      "htmlPath": "./glazewm-bar/dist/index.html",
       "zOrder": "normal",
       "shownInTaskbar": false,
       "focused": false,

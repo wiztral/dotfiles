@@ -1,6 +1,10 @@
 {
-  "$schema": "https://github.com/glzr-io/zebar/raw/v2.1.0/resources/settings-schema.json",
+  "$schema": "https://github.com/glzr-io/zebar/raw/v3.3.1/resources/settings-schema.json",
   "startupConfigs": [
-    "glazewm/with-glazewm.zebar.json"
+    {
+      "pack": "wiztral-zb",
+      "widget": "glazewm-bar",
+      "preset": "default"
+    }
   ]
 }
