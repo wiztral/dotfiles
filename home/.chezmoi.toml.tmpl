@@ -10,6 +10,23 @@
 {{-   end -}}
 {{- end -}}
 
+{{- if eq $osId "windows" -}}
+[cd]
+  command = "pwsh"
+  args = [
+      "-NoLogo",
+  ]
+{{- end }}
+
+[merge]
+  command = "nvim"
+  args = [
+      "-d",
+      {{ printf "%q" "{{ .Destination }}" }},
+      {{ printf "%q" "{{ .Source }}" }},
+      {{ printf "%q" "{{ .Target }}" }}
+  ]
+
 [interpreters.ps1]
   # Prefer PowerShell Core over PowerShell Desktop
   # https://github.com/PowerShell/PowerShell/issues/8635#issuecomment-454028787
