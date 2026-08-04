@@ -8,8 +8,13 @@ Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
 
 {{ if not (lookPath "git") -}}
 scoop install git
+if ($LASTEXITCODE -ne 0) { throw "scoop install git failed with exit code $LASTEXITCODE" }
 {{- end }}
 
-scoop bucket add extras
-scoop bucket add java
-scoop bucket add nerd-fonts
+$existingBuckets = (scoop bucket list | Select-Object -ExpandProperty Name)
+foreach ($bucket in @("extras", "java", "nerd-fonts")) {
+    if ($existingBuckets -notcontains $bucket) {
+        scoop bucket add $bucket
+        if ($LASTEXITCODE -ne 0) { throw "scoop bucket add $bucket failed with exit code $LASTEXITCODE" }
+    }
+}

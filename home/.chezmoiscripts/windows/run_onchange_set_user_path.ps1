@@ -1,4 +1,5 @@
 Set-StrictMode -Version 3.0
+$ErrorActionPreference = "Stop"
 
 # Define the path to add
 $NewPath = "$env:USERPROFILE\quick-cmds"

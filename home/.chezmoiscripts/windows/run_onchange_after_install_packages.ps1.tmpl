@@ -6,7 +6,9 @@ scoop install
 {{- range .packages.scoops }} `
 {{ . -}}
 {{ end }}
+if ($LASTEXITCODE -ne 0) { throw "scoop install failed with exit code $LASTEXITCODE" }
 
 {{- range .packages.wingets }}
 winget install --id {{ . }} --silent --accept-source-agreements --accept-package-agreements
+if ($LASTEXITCODE -ne 0) { throw "winget install --id {{ . }} failed with exit code $LASTEXITCODE" }
 {{- end }}

@@ -1,15 +1,21 @@
 #!/bin/bash
+set -euo pipefail
 
-{{ if eq .chezmoi.os "linux" }}
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-{{ end }}
+if [ -x /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [ -x /usr/local/bin/brew ]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+elif [ -x /home/linuxbrew/.linuxbrew/bin/brew ]; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
 
 brew install zsh
 
-if ! grep -q $(which zsh) /etc/shells; then
-  echo $(which zsh) | sudo tee -a /etc/shells
+ZSH_PATH="$(which zsh)"
+if ! grep -q "$ZSH_PATH" /etc/shells; then
+  echo "$ZSH_PATH" | sudo tee -a /etc/shells
 fi
-chsh -s $(which zsh)
+chsh -s "$ZSH_PATH"
 
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
   echo "Getting ohmyz.sh"
