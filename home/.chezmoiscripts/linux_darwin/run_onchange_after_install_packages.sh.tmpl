@@ -13,4 +13,14 @@ brew bundle --file=/dev/stdin <<EOF
 {{ range .packages.brews -}}
 brew {{ . | quote }}
 {{ end -}}
+{{ if eq .chezmoi.os "linux" -}}
+{{ range .packages.brews_linux -}}
+brew {{ . | quote }}
+{{ end -}}
+{{ end -}}
+{{ if eq .chezmoi.os "darwin" -}}
+{{ range .packages.casks -}}
+cask {{ . | quote }}
+{{ end -}}
+{{ end -}}
 EOF

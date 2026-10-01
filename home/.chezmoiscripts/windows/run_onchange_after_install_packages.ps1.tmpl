@@ -1,6 +1,12 @@
 Set-StrictMode -Version 3.0
 $ErrorActionPreference = "Stop"
-$env:PATH = "$env:PATH;$HOME\scoop\shims"
+
+{{ template "refreshenv.ps1" . }}
+
+Update-SessionEnvironment
+if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
+    $env:PATH = "$env:PATH;$HOME\scoop\shims"
+}
 
 scoop install
 {{- range .packages.scoops }} `

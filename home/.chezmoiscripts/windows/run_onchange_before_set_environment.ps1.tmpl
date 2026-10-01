@@ -1,0 +1,40 @@
+Set-StrictMode -Version 3.0
+$ErrorActionPreference = "Stop"
+
+$variables = [ordered]@{
+{{- range $name, $value := .environment.windows.variables }}
+    {{ $name | squote }} = {{ $value | squote }}
+{{- end }}
+}
+
+$paths = @(
+{{- range .environment.windows.paths }}
+    {{ . | squote }}
+{{- end }}
+)
+
+foreach ($name in $variables.Keys) {
+    $value = [Environment]::ExpandEnvironmentVariables($variables[$name])
+    if ([Environment]::GetEnvironmentVariable($name, "User") -ne $value) {
+        [Environment]::SetEnvironmentVariable($name, $value, "User")
+        Write-Output "Set $name=$value"
+    }
+}
+
+$currentPath = [Environment]::GetEnvironmentVariable("Path", "User")
+$currentEntries = @($currentPath -split ";" | Where-Object { $_ })
+$normalized = @($currentEntries | ForEach-Object { ($_ -replace '/', '\').TrimEnd('\') })
+
+$added = @()
+foreach ($path in $paths) {
+    $path = ([Environment]::ExpandEnvironmentVariables($path) -replace '/', '\').TrimEnd('\')
+    if ($normalized -notcontains $path) {
+        $added += $path
+        $normalized += $path
+    }
+}
+
+if ($added.Count -gt 0) {
+    [Environment]::SetEnvironmentVariable("Path", (($currentEntries + $added) -join ";"), "User")
+    Write-Output "Added to user PATH: $($added -join ', ')"
+}

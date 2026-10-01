@@ -12,10 +12,15 @@ fi
 brew install zsh
 
 ZSH_PATH="$(which zsh)"
-if ! grep -q "$ZSH_PATH" /etc/shells; then
+if ! grep -qx "$ZSH_PATH" /etc/shells; then
   echo "$ZSH_PATH" | sudo tee -a /etc/shells
 fi
-chsh -s "$ZSH_PATH"
+
+# sudo instead of plain chsh: install.sh has already cached the credential,
+# so this does not stop to ask for a password.
+if [ "${SHELL:-}" != "$ZSH_PATH" ]; then
+  sudo chsh -s "$ZSH_PATH" "$(id -un)"
+fi
 
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
   echo "Getting ohmyz.sh"

@@ -1,22 +1,13 @@
-{{ if ne .osId "darwin" }}
-.chezmoiscripts/darwin/**
-{{ end }}
-
-{{ if ne .osId "linux-ubuntu" }}
-.chezmoiscripts/linux/**
-{{ end }}
-
-{{ if ne .osId "wsl-ubuntu" }}
-.chezmoiscripts/linux/wsl/**
-{{ end }}
+# Build output that may exist in the source directory but is never deployed
+.glzr/zebar/wiztral-zb/glazewm-bar/node_modules/
+.glzr/zebar/wiztral-zb/glazewm-bar/*.tsbuildinfo
 
 {{ if ne .osId "windows" }}
 .chezmoiscripts/windows/**
-AppData/
 Documents/
-.glaze-wm/
+.glzr/
 quick-cmds/
-{{else}}
+{{ else }}
 .chezmoiscripts/linux_darwin/**
 .config/tmux/
 .zshrc

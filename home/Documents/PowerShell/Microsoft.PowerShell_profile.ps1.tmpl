@@ -9,3 +9,6 @@ Set-PsFzfOption -TabExpansion
 fnm env --use-on-cd | Out-String | Invoke-Expression
 
 oh-my-posh init pwsh --config ~/.config/ohmyposh/base.toml | Invoke-Expression
+
+{{ template "refreshenv.ps1" . }}
+Set-Alias -Name refreshenv -Value Update-SessionEnvironment
