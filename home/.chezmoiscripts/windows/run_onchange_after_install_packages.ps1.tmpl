@@ -18,3 +18,9 @@ if ($LASTEXITCODE -ne 0) { throw "scoop install failed with exit code $LASTEXITC
 winget install --id {{ . }} --silent --accept-source-agreements --accept-package-agreements
 if ($LASTEXITCODE -ne 0) { throw "winget install --id {{ . }} failed with exit code $LASTEXITCODE" }
 {{- end }}
+
+# Mason installs language servers with npm on the first nvim launch.
+fnm install --lts
+if ($LASTEXITCODE -ne 0) { throw "fnm install --lts failed with exit code $LASTEXITCODE" }
+fnm default lts-latest
+if ($LASTEXITCODE -ne 0) { throw "fnm default lts-latest failed with exit code $LASTEXITCODE" }

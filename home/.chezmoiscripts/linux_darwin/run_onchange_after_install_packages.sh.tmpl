@@ -24,3 +24,9 @@ cask {{ . | quote }}
 {{ end -}}
 {{ end -}}
 EOF
+
+# Mason installs language servers with npm on the first nvim launch. Without a
+# Node here, WSL falls back to the Windows npm on PATH, whose writes into the
+# Linux filesystem end up owned by root.
+fnm install --lts
+fnm default lts-latest
