@@ -16,8 +16,8 @@ if ! grep -qx "$ZSH_PATH" /etc/shells; then
   echo "$ZSH_PATH" | sudo tee -a /etc/shells
 fi
 
-# sudo instead of plain chsh: install.sh has already cached the credential,
-# so this does not stop to ask for a password.
+# sudo instead of plain chsh: sudo reuses the password just given for
+# /etc/shells above. A plain chsh would ask for it again.
 if [ "${SHELL:-}" != "$ZSH_PATH" ]; then
   sudo chsh -s "$ZSH_PATH" "$(id -un)"
 fi

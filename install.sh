@@ -112,8 +112,9 @@ main() {
   echo "Administrator rights are needed for system packages and the login shell."
   sudo -v </dev/tty
 
-  # Keep the sudo credential fresh until this script exits, so the long package
-  # installs further down never stop to ask again.
+  # Keep the sudo credential fresh until this script exits. brew resets it
+  # (sudo --reset-timestamp) before it may use sudo, so the login shell step in
+  # the chezmoi scripts asks for the password once more.
   (
     while kill -0 "$$" 2>/dev/null; do
       sudo -n true 2>/dev/null || exit
@@ -125,6 +126,8 @@ main() {
   STARTED_AGENT=false
   cleanup() {
     kill "$SUDO_KEEPALIVE" 2>/dev/null || true
+    # Do not leave this terminal able to sudo without a password.
+    sudo -k 2>/dev/null || true
     [ -n "$ASKPASS" ] && rm -f "$ASKPASS"
     if $STARTED_AGENT; then ssh-agent -k >/dev/null 2>&1 || true; fi
   }

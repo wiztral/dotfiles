@@ -28,7 +28,9 @@ On Linux the system prerequisites are installed with `apt-get`, `dnf` or
 
 Both scripts ask their questions first (name, email, a passphrase for a new
 SSH key, and the sudo password on Linux/macOS) and then run unattended until
-the SSH key has to be added to GitHub.
+the SSH key has to be added to GitHub. On Linux/macOS the sudo password is
+asked once more when zsh becomes the login shell, because Homebrew clears the
+cached credential.
 
 | Step | Windows (`install.ps1`) | Linux/macOS (`install.sh`) |
 | --- | --- | --- |
